@@ -12,7 +12,7 @@ a {
     color: lightgray;
 }
 
-.main-box {
+.main-wrap {
     margin: 50px auto 0px auto;
     width: 900px;
     /* background-color: aqua; */
@@ -31,31 +31,32 @@ header>img {
     border-radius: 8px;
 }
 
-/* top-nav-box */
+/* top-nav-wrap */
 
-.top-nav-box {
+.top-nav-wrap {
     min-width: 500px;
     text-align: center;
 }
 
-.top-nav-box>h3 {
+.top-nav-wrap>h3 {
     font-size: 1.8em;
     line-height: 300%;
 }
 
 
-.top-nav-box>h1 {
+.top-nav-wrap>h1 {
     font-size: 2.5em;
     font-weight: bold;
     line-height: 300%;
 }
 
-.top-nav-box>h1>span {
+.top-nav-wrap>h1>span {
     color: red;
 }
 
-/* content-box */
-.content-box {
+/* content-wrap */
+
+.content-wrap {
     margin: 30px auto 0px auto;
     border: 1px solid #c1c1c1;
     border-radius: 8px;
@@ -63,18 +64,18 @@ header>img {
     min-height: 300px;
 }
 
-.content-box p {
+.content-wrap p {
     font-weight: bolder;
 }
 
-.content-box span {
+.content-wrap span {
     font-weight: lighter;
     color: red;
 }
 
 /* card */
 
-.card-box a {
+.card-wrap a {
     text-decoration: none;
     color: black;
 }
@@ -102,10 +103,55 @@ header>img {
     width: 100px;
     border-radius: 8px;
 }
-.card-cell h2 > span {
+
+.card-cell h2>span {
     font-size: 25px;
     margin-left: 10px;
 }
+
+/* comment-wrap */
+.comment-wrap {
+    margin-top: 30px;
+    border: 1px solid #c1c1c1;
+    border-radius: 8px;
+    padding: 30px;
+}
+
+.comment-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.comment-body .comment-row:not(:first-child) {
+    border-top: 1px solid #c1c1c1;
+}
+
+.comment-row span {
+    font-size: 13px;
+    font-weight: lighter;
+    min-width: 130px;
+}
+
+.comment-input-wrap {
+    padding-top: 20px;
+}
+
+.comment-content-wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comment-content-wrap button{
+    margin-left: 15px;
+    min-width: 80px;
+}
+
+/* footer */
 
 footer {
     margin-top: 30px;

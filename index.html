@@ -9,6 +9,77 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+        import { getFirestore, collection, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+        import { addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyBKJmmjsmrWJE7Cz_o12WwCSuLpjNaOmuE",
+          authDomain: "team-blush.firebaseapp.com",
+          projectId: "team-blush",
+          storageBucket: "team-blush.appspot.com",
+          messagingSenderId: "487722864962",
+          appId: "1:487722864962:web:38c9f227485fb85ea9f8db",
+          measurementId: "G-CQCWETGCEF"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // DateToString function
+        function date2String(date) {
+            const newDate = new Date(date * 1000)
+            
+            const yy = newDate.getFullYear();
+            const mm = (newDate.getMonth() + 1).toString().padStart(2, '0')
+            const dd = newDate.getDate().toString().padStart(2, '0');
+
+            const hh = newDate.getHours().toString().padStart(2, '0');
+            const MM = newDate.getMinutes().toString().padStart(2, '0');
+            const ss = newDate.getSeconds().toString().padStart(2, '0');
+            
+            return `${yy}-${mm}-${dd} ${hh}:${MM}:${ss}`;
+        }
+
+        // comment read
+        const query = query(collection(db, "comments"), orderBy('date', 'desc'))
+        const comments = await getDocs(query);
+        
+        comments.forEach(e => {
+            const { comment, date } = e.data();
+            const strDate = date2String(date.seconds)
+            
+            $('.comment-body').append(`<div class="comment-row">
+                ${comment}
+                <span>${strDate}</span>
+            </div>
+            `);
+        });
+
+        // comment write
+        async function writeFirestore() {
+            const comment = $("input[name=comment]").val();
+            const doc = { comment, date: new Date() };
+            
+            await addDoc(collection(db, "comments"), doc);
+
+            window.location.reload();
+        }
+
+        $('.comment-content-wrap button').click(writeFirestore)
+        $('.comment-content-wrap input[name=comment]').keydown(function(e) {
+            if (e.keyCode == 13) {
+                writeFirestore()
+            }
+        })
+
+        // nav top event
         $("li.nav-item").click(async function (e) {
             $('a.nav-item,.active').addClass('link-dark');
             $('a.nav-item,.active').removeClass('active');
@@ -18,7 +89,7 @@
             $(e.target).removeClass('link-dark');
 
             const key = $(e.target).attr('key');
-            $('.content-box div').css('display', 'none');
+            $('.content-wrap div').css('display', 'none');
 
             switch (key) {
                 case 'introduce-team':
@@ -37,15 +108,19 @@
                     $('#introduce-project').css('display', 'block');
             }
         })
+      </script>
+
+    <script type="module">
+        
     </script>
     <title>홍조 : 부끄러움이 많은 아이(I)들</title>
 </head>
 
 <body>
-    <div class="main-box">
+    <div class="main-wrap">
         <header>
             <img src="asset/img/blush_background.png">
-            <div class="top-nav-box">
+            <div class="top-nav-wrap">
                 <h3>부끄러움이 많은 아이(I)들...</h3>
                 <h1><span>*</span>홍 조<span>*</span></h1>
                 <nav>
@@ -67,7 +142,7 @@
                 </nav>
             </div>
         </header>
-        <div class="content-box">
+        <div class="content-wrap">
             <div id="introduce-project" aria-hidden="false">
                 팀원에 대해서 자세히 알아보고, 팀의 추구하는 목표와 협업 스타일을 정의하고자 합니다.
             </div>
@@ -88,7 +163,7 @@
                 <p>이용훈 : <span>돈가츠에 진심입니다.</span></p>
             </div>
         </div>
-        <div class="card-box">
+        <div class="card-wrap">
             <div class="card-row">
                 <a href="#" style="text-decoration:none">
                     <div class="card-cell">
@@ -129,6 +204,15 @@
                     </div>
                 </a>
             </div>
+        </div>
+        <div class="comment-wrap">
+            <div class="comment-body"></div>
+                <div class="comment-input-wrap">
+                    <div class="comment-content-wrap">
+                        <input class="form-control" type="text" name="comment">
+                        <button type="button" class="btn btn-light">남기기</button>
+                    </div>
+                </div>
         </div>
     </div>
     <footer>
