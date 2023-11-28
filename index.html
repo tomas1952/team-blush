@@ -48,9 +48,9 @@
         }
 
         // comment read
-        const query = query(collection(db, "comments"), orderBy('date', 'desc'))
-        const comments = await getDocs(query);
-        
+        const commentsQuery = query(collection(db, "comments"), orderBy('date', 'desc'))
+        const comments = await getDocs(commentsQuery);
+
         comments.forEach(e => {
             const { comment, date } = e.data();
             const strDate = date2String(date.seconds)
