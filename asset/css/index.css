@@ -155,10 +155,14 @@ header>img {
 
 footer {
     margin-top: 30px;
-    text-align: center;
     background-color: #e1e1e1;
     padding: 20px;
     font-size: 12px;
     line-height: 80%;
     color: #919191;
+}
+
+footer div{
+    text-align: center;
+    margin: 0px auto 0px auto;
 }
