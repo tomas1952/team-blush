@@ -65,12 +65,11 @@ header>img {
 
 .content-box p {
     font-weight: bolder;
-    color: red;
 }
 
 .content-box span {
     font-weight: lighter;
-    color: black;
+    color: red;
 }
 
 /* card */
