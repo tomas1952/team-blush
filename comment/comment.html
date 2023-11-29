@@ -93,16 +93,20 @@
         inputTag.addEventListener('keydown', async function (e) {
             if (e.keyCode == 13) {
                 const comment = getInputComment();
-                await writeFirestore(comment);
-                window.location.reload();
+                if (comment.length > 0) {
+                    await writeFirestore(comment);
+                    window.location.reload();
+                }
             }
         })
 
         const buttonTag = document.querySelector('#comment-input-wrap button');
         buttonTag.addEventListener('click', async function (e) {
             const comment = getInputComment();
-            await writeFirestore(comment);
-            window.location.reload();
+            if (comment.length > 0) {
+                await writeFirestore(comment);
+                window.location.reload();
+            }
         })
     </script>
 </head>
